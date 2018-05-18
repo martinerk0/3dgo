@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Tutorial for creating maps for 3dgo in Blender</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            position: relative;
+        }
+
+        /*div.col-8 div {*/
+            /*height: 500px;*/
+        /*}*/
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+
+        @media(min-width:576px){
+            ul.nav-pills {
+                top: 20px;
+                /*position: fixed;*/
+            }
+        }
+        @media(min-width:768px){
+            ul.nav-pills {
+                top: 20px;
+                position: fixed;
+            }
+        }
+        @media(min-width:992px){
+            ul.nav-pills {
+                top: 20px;
+                position: fixed;
+            }
+        }
+        @media(min-width:1200px){
+            ul.nav-pills {
+                top: 20px;
+                position: fixed;
+            }
+        }
+    </style>
+</head>
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="1">
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-sm-2 min-width:200px  " id="myScrollspy" >
+            <ul class="nav nav-pills flex-column" >
+                <li class="nav-item">
+                    <a href="index.html" class="btn btn-danger btn-block">Back to Lobby</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="#section1">Step 1</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#section2">Step 2</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#section3">Step 3</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#section4">Step 4</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#section5">Step 5</a>
+                </li>
+                <!--<li class="nav-item dropdown">-->
+                    <!--<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Step 4</a>-->
+                    <!--<div class="dropdown-menu">-->
+                        <!--<a class="dropdown-item" href="#section41">Link 1</a>-->
+                        <!--<a class="dropdown-item" href="#section42">Link 2</a>-->
+                    <!--</div>-->
+                <!--</li>-->
+            </ul>
+        </nav>
+        <div class="col-sm-10">
+            <div id="section1" >
+                <h1>Step 1</h1>
+                <p>1.) Open the Blender and delete default cube.</p>
+                <img src="tutorial_images/blender1.png" class="img-rounded">
+            </div>
+            <div id="section2" >
+                <h1>Step 2</h1>
+                <p>2.) Add or create any mesh you want.</p>
+                <img src="tutorial_images/blender2.png" class="img-rounded">
+            </div>
+            <div id="section3" >
+                <h1>Step 3</h1>
+                <p>3.) After you are content with your creation, go to edit mode and press x and then delete only faces.</p>
+                <img src="tutorial_images/blender3.png" class="img-rounded">
+            </div>
+            <div id="section4" >
+                <h1>Step 4</h1>
+                <p>4.) Then, select File => Export => Wavefront (.obj)</p>
+                <img src="tutorial_images/blender4.png" class="img-rounded">
+            </div>
+            <div id="section5" >
+                <h1>Step 5</h1>
+                <p> 5.) Save  file with only following options: Include Edges, Keep Vertex Order</p>
+                <img src="tutorial_images/blender5.png" class="img-rounded">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3dgo</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        /*.container{*/
+            /*top:0;*/
+        /*}*/
+        body{
+            position: relative;
+        }
+
+        #topBarWrapper{
+            /*bottom: 0;*/
+            /*left: 0;*/
+            top: 100%;
+            left:0%;
+            position: absolute;
+            /*width: 100%;*/
+        }
+        #gameDiv
+        {
+            height: 100%;
+            width: 100%;
+            position: absolute;
+        }
+        #topBarWrapper{
+            width: 100%;
+            position: absolute;
+        }
+        #topBar
+        {
+            /*top: 0;*/
+            /*right: 0;*/
+            /*position:relative;*/
+            float:right;
+
+        }
+        #whoami{
+            background-color: white;
+        }
+        .top-buffer { padding-top:40px; }
+
+        #bottom{
+            margin-top: 20px;
+            /*background-color: #e6e1e8;*/
+        }
+        /*#gameCreationChoices{*/
+            /*background-color: #e1e4e8;*/
+        /*}*/
+        /*#bottomContainer{*/
+            /*background-color: #e5e8ea;*/
+        /*}*/
+        canvas {
+            display: block; /* fix necessary to remove space at bottom of canvas */
+        }
+
+    </style>
+</head>
+
+<script  src="socket.io/socket.io.js"></script>
+<script  src="lib/popper.js"></script>
+<script  src="lib/jquery-3.2.1.min.js"></script>
+<script  src="lib/bootstrap.min.js"></script>
+<!--<script  src="js/OrbitControls.js"></script>-->
+<!--<script type="module" src="class01.js"></script>-->
+<script  type="module" src="js/ClientController.js"></script>
+
+
+<body>
+
+    <div id="gameDiv" hidden>
+        <!--I add to this div textbox and button and that will be input for the Connect4 game-->
+    </div>
+    <!--<div class="container" >-->
+        <div id=topBarWrapper" class="container" >
+
+            <div id="topBar" class="row">
+
+                <div id="whoami" class="col rounded-bottom">
+                    <!--this will display who you are (your socket.ID) -->
+                </div>
+
+                <div id="playingGameDiv" hidden  class="col" >
+                    <button id="finishGameButton" class="btn btn-info" >Finish Game!</button>
+                </div>
+
+            </div>
+        </div>
+    <!--</div>-->
+
+
+
+
+    <div class="container">
+
+        <div id="waitForOpponentDiv" hidden > Waiting for opponent...
+            <button id="cancelWaitingForOpponentButton" class="btn btn-danger" >Back go Menu</button>
+        </div>
+
+
+
+        <div id="gameMenuDiv" >
+            <div  class="row">
+                <h3> List of available games:</h3>
+            </div>
+            <div id="gameListDiv" class="row">
+            </div>
+
+            <div  class="row">
+                <!--<div class="col-3">-->
+                    <h3>  Start new game:  </h3>
+                <!--</div>-->
+            </div>
+
+            <div id="gameCreationChoices" class="row" >
+                <div class="col-3">
+                    <select id="gameListSelect" class="form-control"  >
+                        <!-- this list will be filled at start of the client by 'listOfBoards' event -->
+                        <!--<option value="connect4" selected >Connect 4</option>-->
+                    </select>
+                </div>
+                <div class="col-3">
+                    <select id="opponentListSelect"  class="form-control"  >
+                        <option value="random"   > Random agent </option>
+                        <option value="mcts" >AI MCTS</option>
+                        <option value="human" selected>Human</option>
+                    </select>
+                </div>
+
+                <div class="col-3">
+                        <button id="createGameButton" class="btn btn-info" >Create New Game</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="bottom" class="container lobby">
+
+        <div  class="row" >
+            <!--<h3>  Uplodad your Board:  </h3>-->
+            <h3> </h3>
+        </div>
+
+        <hr>
+
+        <div  class="row ">
+
+            <div class="col-6 mb-4 ">
+                <a href="tutorial.html" class="btn btn-info">How to create custom Board</a>
+            </div>
+
+        </div>
+
+        <div  class="row">
+            <div class="col-6 ">
+                <p>
+                Created by Martin Cerven 2016-2018.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+
+</html>

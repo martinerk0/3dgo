@@ -1,0 +1,72 @@
+{
+  "_from": "threejs-full-es6",
+  "_id": "threejs-full-es6@2.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-foW67mEy/+GFFk+JzwNcTK0AunJR4+iWNQ9diH/TZSAnQ3W9N2+EVqPyAEPlgxUDT6lr6dS8CU+Bm7da5Bzyyg==",
+  "_location": "/threejs-full-es6",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "threejs-full-es6",
+    "name": "threejs-full-es6",
+    "escapedName": "threejs-full-es6",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/threejs-full-es6/-/threejs-full-es6-2.1.0.tgz",
+  "_shasum": "7a7edcae65d5cc674385fb7baf2a5aa5cf054741",
+  "_spec": "threejs-full-es6",
+  "_where": "/Users/Martin/Projects/bakalarka/nodejs_python/app",
+  "author": {
+    "name": "Itee"
+  },
+  "bugs": {
+    "url": "https://github.com/Itee/threejs-full-es6/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "The famouse ThreeJs library with full examples as es6 module",
+  "devDependencies": {
+    "del": "^3.0.0",
+    "eslint-config-mdcs": "^4.2.2",
+    "gulp": "^3.9.1",
+    "gulp-batch-replace": "^0.0.0",
+    "gulp-util": "^3.0.8",
+    "rollup": "^0.50.0",
+    "rollup-plugin-buble": "^0.16.0",
+    "rollup-plugin-uglify": "^2.0.1",
+    "run-sequence": "^2.2.0",
+    "three": "^0.88.0"
+  },
+  "homepage": "https://github.com/Itee/threejs-full-es6#readme",
+  "keywords": [
+    "threejs",
+    "es6",
+    "examples",
+    "module",
+    "3d"
+  ],
+  "license": "MIT",
+  "main": "gulpfile.js",
+  "name": "threejs-full-es6",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Itee/threejs-full-es6.git"
+  },
+  "scripts": {
+    "build": "gulp build-three",
+    "clean": "gulp clean",
+    "convert": "gulp convert-three",
+    "help": "gulp help",
+    "patch": "gulp patch-three",
+    "release": "gulp release"
+  },
+  "version": "2.1.0"
+}
