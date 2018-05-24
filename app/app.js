@@ -102,7 +102,7 @@ class Server
 
                     //let client_ai_process =  require('child_process').fork('./serverSide/artificial_intelligence/ClientController_AI.js',[id,game,opponent], {execArgv: ['--inspect-brk=5959']},{stdio: [ 'pipe', 'pipe', 'pipe', 'ipc' ]}); // pusti pythoni kod
                     //let client_ai_process =  require('child_process').fork('./serverSide/artificial_intelligence/ClientController_AI.js',[id,game,opponent], {execArgv: ['--inspect-brk=5959']}); // pusti pythoni kod for DEGUD
-                    let client_ai_process =  require('child_process').fork('./serverSide/artificial_intelligence/ClientController_AI.js',[id,game,opponent],); // pusti pythoni kod
+                    let client_ai_process =  require('child_process').fork('./serverSide/artificial_intelligence/ClientController_AI.js',[id,game,opponent]); // pusti pythoni kod
 
                     this.listOfRunningAgentProcesses.push(client_ai_process);
                 }

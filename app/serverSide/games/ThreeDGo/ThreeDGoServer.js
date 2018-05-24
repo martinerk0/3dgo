@@ -133,6 +133,7 @@ class ThreeDGo {
         this.secondPlayerAck=null;
         this.whichPlayerPassedFirst=null;
         this.koMap = new Map();
+        this.moveNumber=0;
     }
     initializeEvalPhase(){
         this.evalBoard = this.board.createCopy();
@@ -267,6 +268,7 @@ class ThreeDGo {
                 this.onMove = 1;
             }
             this.lastAddedStoneId="p";
+            this.moveNumber=this.moveNumber+1;
         }
         else {
             this.passed=0;
@@ -279,6 +281,7 @@ class ThreeDGo {
                 this.onMove = 1;
             }
             this.lastAddedStoneId=move;
+            this.moveNumber=this.moveNumber+1;
 
             this.board = this.removeEnemyAdjacentGroups(move, this.board,true);
             let boardString = this.createStringOfBoard(this.board);
@@ -299,7 +302,6 @@ class ThreeDGo {
         if(move==="p"){             // player can always play pass
             return true
         }
-
 
         let pos = this.board.at(move);
         if (this.board.at(move).color === 0) {
@@ -440,12 +442,54 @@ class ThreeDGo {
 
         return listOfValidMoves;
     }
+
     /**
-     * Is used in mcts simulations
+     * This is used in default policy. It does not COPY BOARDS, only applying moves
      * @param self
      * @param triedMoves
      */
     next_state(triedMoves){
+        if (this.passed==1){                        // if previous player passed
+            if (this.evaluateBoard(this.onMove)){   // if I am winning, then pass, because you win!
+                //let this = this.createCopy();
+                this.play("p");
+                this.action = "p";
+                this.passed = 2;
+                //return this;
+            }
+        }
+
+
+        let legalMoves=this.getValidMoves();
+        let validMoves2 = legalMoves.filter(x => !triedMoves.includes(x));
+
+        let validMoves = this.filterOneOwnEyes(validMoves2);
+        if (validMoves.length>0) {
+            //# play    move
+
+            let chosen = this.randomIntFromInterval(0, validMoves.length - 1);
+
+            this.play(validMoves[chosen]);
+            this.action = validMoves[chosen];
+            this.passed = 0;
+            //return this;
+        }
+        else {
+            //# play  pass
+            //let newState = this.createCopy();
+            this.play("p");
+            this.action = "p";
+            this.passed = this.passed+1;
+            //return this;
+        }
+    }
+
+    /**
+     * This is used in tree policy, and involves copying of the board, because each node has to have separate copy of board
+     * @param triedMoves
+     * @returns {ThreeDGo}
+     */
+    next_state2(triedMoves){
         if (this.passed==1){                        // if previous player passed
             if (this.evaluateBoard(this.onMove)){   // if I am winning, then pass, because you win!
                 let newState = this.createCopy();
@@ -453,15 +497,16 @@ class ThreeDGo {
                 newState.action = "p";
                 newState.passed = 2;
                 return newState;
+
             }
         }
 
 
         let legalMoves=this.getValidMoves();
         //validMoves=list(set(legalMoves)-set(triedMoves))  # legal moves: [1,2,3,4,5], tried moves: [1,4,5] so valid are [2,3]
-        let validMoves = legalMoves.filter(x => !triedMoves.includes(x));
+        let validMoves2 = legalMoves.filter(x => !triedMoves.includes(x));
 
-
+        let validMoves = this.filterOneOwnEyes(validMoves2);
         if (validMoves.length>0) {
             //# play    move
 
@@ -478,10 +523,48 @@ class ThreeDGo {
             let newState = this.createCopy();
             newState.play("p");
             newState.action = "p";
-            newState.passed = 1;
+            newState.passed = newState.passed+1;
             return newState;
         }
     }
+
+    /**
+     * Function that gets list of valid moves and removes from it all points that are one-eyes
+     *  one-eye is a empty point that has all neighbouring points stones of player's color (so enemy's and blanks are disallowed).
+     *  The point is to not play inside own eyes, because that would not help.
+     * @param validMoves list of valid moves
+     * @returns {*} list of validMoves - oneEyes
+     */
+    filterOneOwnEyes(validMoves){
+        let validMovesWithoutOneEyes = [];
+        for (let move of validMoves){
+            let this_move_color = this.board.vertList.get(move).color;
+            if (this_move_color===0){ // is empty point? -> only empty points can be one eyes
+                let neighs = this.board.adjList.get(move);
+                let allMine = true;     // are all neighbouring points of mine color? if yes then this is one-eye
+                for (let neigh of neighs){
+
+                    let neigh_col = this.board.vertList.get(neigh[0]).color;
+                    if (neigh_col!==this.onMove){
+                        allMine=false; //one of neighbours is not my color, therefore this is not oneEye
+                        break;
+                    }
+                }
+
+                if (allMine===true){  // so...if this point is blank, and all its neighbours are of my color, then it is oneEye
+                    // and therefore don't add it to the list
+                    let i = 0;
+                }
+                else{
+                    validMovesWithoutOneEyes.push(move);
+                }
+
+            }
+
+        }
+        return validMovesWithoutOneEyes;
+    }
+
     /**
      * returns random integer from specified interval
      * @param min
@@ -491,8 +574,10 @@ class ThreeDGo {
     randomIntFromInterval(min,max){
         return Math.floor(Math.random()*(max-min+1)+min);
     }
+
+
     num_moves() {
-        return this.getValidMoves().length;
+        return this.getValidMoves().length+1; //+1 means pass
     }
     /**
      * Creates copy of this instance
@@ -541,12 +626,13 @@ class ThreeDGo {
     }
     //---------- I/O methods: ----------
     serialize(){
-         let copy =  JSON.parse(JSON.stringify(this));
-         copy.board = this.board.serialize();
-         if (this.evalBoard!==null) {
-             copy.evalBoard = this.evalBoard.serialize();
-         }
-         return copy
+        let copy =  JSON.parse(JSON.stringify(this));
+        copy.board = this.board.serialize();
+        if (this.evalBoard!==null) {
+            copy.evalBoard = this.evalBoard.serialize();
+        }
+        copy.serializedKoMap = JSON.stringify([...this.koMap]);
+        return copy
     }
     updateState(new_state){
         this.state=new_state;
@@ -560,6 +646,9 @@ class ThreeDGo {
         this.whiteScore = newGameFromServer.whiteScore ;
         this.onMove=newGameFromServer.onMove;
         this.lastAddedStoneId=newGameFromServer.lastAddedStoneId;
+        this.moveNumber=newGameFromServer.moveNumber;
+        this.koMap = new Map(JSON.parse(newGameFromServer.serializedKoMap));
+
 
         if (newGameFromServer.evalBoard!==null){
             let evalBoardFromServer =   UndirectedGraph.deserialize(newGameFromServer.evalBoard);
@@ -606,5 +695,3 @@ class ThreeDGo {
 exports.Spot = Spot;
 exports.UndirectedGraph = UndirectedGraph;
 exports.ThreeDGo = ThreeDGo;
-
-

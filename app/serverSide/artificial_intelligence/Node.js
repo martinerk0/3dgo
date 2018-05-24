@@ -22,8 +22,12 @@ class Node {
         this.visits += 1;
     }
 
+    /**
+     * A node is expandable if it represents a non- terminal state and has unvisited (i.e. unexpanded) children.
+     * @returns {boolean}
+     */
     fully_expanded() {
-        if (this.children.length === this.state.num_moves()) {
+        if (this.state.terminal()===false && this.children.length === this.state.num_moves()) {
             return true;
         }
         else {

@@ -41,12 +41,13 @@ class MCTS_Go_Agent {
      */
     uctSearch(state) {
         let root = new Node.Node(state, null);
-
+        console.time("mcts");
         for (let i=0; i<this.iterations; i++) {               // budget
             let leafNode = this.treePolicy(root);                // from root, do tree policy and add one new leaf node
             let reward = this.defaultPolicy(leafNode.state);   // do playout with state, and compute reward for this state
             this.backup(leafNode, reward);        // update reward and count values on the path from leaf node to the root node
         }
+        console.timeEnd("mcts");
         let bestChild = this.bestChild(root, 0);
         return bestChild.state.action;         // select best following child from root node
     }
@@ -69,9 +70,9 @@ class MCTS_Go_Agent {
      * @returns reward
      */
     defaultPolicy(state) {
-        let state2 = state.createCopy();                    // so we dont affect current state by playout
+        let state2 = state.createCopy();                 // so we dont affect current state by playout
         while (state2.terminal() === false) {
-            state2 = state2.next_state([]);
+            state2.next_state([]);
         }
 
         let reward = state2.evaluateBoard(this.player);  // compute winner/loser/draw reward for this player
@@ -80,7 +81,7 @@ class MCTS_Go_Agent {
 
     expand(node) {
         let tried_actions = node.children.map(c => c.state.action);
-        let new_state = node.state.next_state(tried_actions);
+        let new_state = node.state.next_state2(tried_actions); // not the same next state as default policy...
 
 
         node.addChild(new_state);
@@ -115,8 +116,11 @@ class MCTS_Go_Agent {
                 //return "no best child found!!!";
             }
         }
+        let result = bestchildren[Math.floor(Math.random()*bestchildren.length)];
+        if (result===undefined){
 
-        return bestchildren[Math.floor(Math.random()*bestchildren.length)];
+        }
+        return result;
     }
 
     /**
