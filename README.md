@@ -3,7 +3,7 @@ Client server app that allows you play 3d go and other games in browser. <br>
 
 Written in ES2015 Javascript, python and  C++. <br>
 
-[You can play current build here](http://www.3dgo.martincerven.com) <br>
+[You can play current build here](http://3dgo.martincerven.com) <br>
 
 #### How to play: <br>
  Select type of game which you want to play and click create new game or join existing game.
