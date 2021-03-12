@@ -4,7 +4,7 @@
   "description": "Application allowing user to play go on undirected graphs.",
   "dependencies": {
     "express": "^4.15.2",
-    "socket.io": "^2.0.4",
+    "socket.io": "^2.4.0",
     "three": "^0.88.0",
     "threejs-full-es6": "^2.1.0"
   }
